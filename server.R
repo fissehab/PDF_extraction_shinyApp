@@ -399,9 +399,7 @@ SearchMatrix<-reactive({
   
 })
 
-output$fish=renderText({
-  SearchMatrix()
-})
+
 
 output$searched<-renderPlotly({
   
