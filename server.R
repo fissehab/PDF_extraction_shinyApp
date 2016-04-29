@@ -405,6 +405,7 @@ output$searched<-renderPlotly({
   
   if(is.null(SearchMatrix()))
     return(NULL)
+
   
   if(is.na(SearchMatrix()))
     return(NULL)
