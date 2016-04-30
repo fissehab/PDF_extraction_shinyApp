@@ -273,10 +273,6 @@ output$wordcloud <- renderPlot({
           
           x11(title = documents[i])
           
-          layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
-          par(mar=rep(0, 4))
-          plot.new()
-          text(x=0.5, y=0.5, documents[i])
         
           wordcloud(sparse$Term,sparse$Frequency, min.freq=input$freq, max.words=input$max,
                     random.order=FALSE,scale=c(4,0.5),

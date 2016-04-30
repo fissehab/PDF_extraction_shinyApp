@@ -35,7 +35,7 @@ dashboardPage(skin="blue",
                            We can browse through lots of documents in a single click and
                            get a summary and comparison of the documents in minutes.",style="color:#009900"),
 
-                      tags$h4("Upload PDF documents from disk and/or provide links of PDF documents. 
+                      tags$h4("Upload PDF documents (books, journals, surveys,etc.) from disk and/or provide links of PDF documents. 
                               Then go to the", tags$span("Summaries",style="color:red"), tags$span("section in the sidebar to get summaries of the uploaded documents.
                               We can search one or more terms and see their distribution across the uploaded documents in 
                               the" , tags$span("Search and Filter",style="color:red"), tags$span("menu item. We can also filter to display words with certain frequency range only."))),
