@@ -16,32 +16,32 @@ shinyServer(function(input, output) {
   options(shiny.maxRequestSize=800*1024^2) 
   
 
-  mypdf1_list <- reactive({
-    
-   
-        withProgress({
-         
-          if(nchar(input$link)>0){
-            setProgress(message = "Downloading Document...")
-            
-
-                
-                address=unlist(strsplit(input$link,","))
-              
-          
-            pdfs=list()
-            
-            for(i in 1:length(address)){
-              pdfs[[i]]= pdf_text(str_trim(address[i]))
-            }
-            
-            pdfs
-            
-               }else(return(NULL))
-          
-        })
-    
-    })
+#   mypdf1_list <- reactive({
+#     
+#    
+#         withProgress({
+#          
+#           if(nchar(input$link)>0){
+#             setProgress(message = "Downloading Document...")
+#             
+# 
+#                 
+#                 address=unlist(strsplit(input$link,","))
+#               
+#           
+#             pdfs=list()
+#             
+#             for(i in 1:length(address)){
+#               pdfs[[i]]= pdf_text(str_trim(address[i]))
+#             }
+#             
+#             pdfs
+#             
+#                }else(return(NULL))
+#           
+#         })
+#     
+#     })
 
 
   
@@ -82,7 +82,8 @@ documents<-reactive({
   #if (is.null(inFile))
     #return(NULL)
   
-  c(unlist(strsplit(input$link,",")),inFile$name)
+ # c(unlist(strsplit(input$link,",")),inFile$name)
+  inFile$name
   
 })
 
@@ -97,7 +98,9 @@ mymatrix<-reactive({
   withProgress({
     setProgress(message = "Processing corpus...")
   
-  txt=c(unlist(mypdf1_list()), unlist(mypdf2_list()))
+  #txt=c(unlist(mypdf1_list()), unlist(mypdf2_list()))
+  
+  txt=c(unlist(mypdf2_list()))
 
   
    if(is.null(txt))
@@ -156,9 +159,9 @@ mydataTable<-reactive({
     if(is.null(mymatrix()))
       return(NULL)
     
-    pdfs=c(mypdf1_list(), mypdf2_list())
+    #pdfs=c(mypdf1_list(), mypdf2_list())
     
-    
+    pdfs=mypdf2_list()
     
     if(length(pdfs)>0){
       
@@ -231,7 +234,9 @@ output$wordcloud <- renderPlot({
       if(is.null(mymatrix()))
         return(NULL)
       
-     pdfs=c(mypdf1_list(), mypdf2_list())
+     #pdfs=c(mypdf1_list(), mypdf2_list())
+     
+     pdfs=mypdf2_list()
       
       
       
@@ -272,7 +277,7 @@ output$wordcloud <- renderPlot({
           documents=documents()
           
           x11(title = documents[i])
-          
+         
         
           wordcloud(sparse$Term,sparse$Frequency, min.freq=input$freq, max.words=input$max,
                     random.order=FALSE,scale=c(4,0.5),
@@ -343,7 +348,9 @@ SearchMatrix<-reactive({
   if(is.null(mymatrix()))
     return(NULL)
   
-  pdfs=c(mypdf1_list(), mypdf2_list())
+  #pdfs=c(mypdf1_list(), mypdf2_list())
+  
+  pdfs=mypdf2_list()
   
   
   if(length(pdfs)>0){
@@ -401,13 +408,10 @@ output$searched<-renderPlotly({
   
   if(is.null(SearchMatrix()))
     return(NULL)
-
   
-  if(is.na(SearchMatrix()))
+  if(nchar(mysearch())==0)
     return(NULL)
   
-  if(nchar(SearchMatrix())==0)
-    return(NULL)
   
   mm=SearchMatrix()
   
